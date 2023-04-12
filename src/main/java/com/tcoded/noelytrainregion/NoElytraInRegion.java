@@ -5,6 +5,7 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import org.bukkit.World;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -47,9 +48,15 @@ public final class NoElytraInRegion extends JavaPlugin {
         for (String regionName : noElytraRegionNames) {
             String[] parts = regionName.split(":");
 
-            RegionManager regionManager = regionContainer.get(new BukkitWorld(getServer().getWorld(parts[0])));
-            if (regionManager == null) {
+            World world = getServer().getWorld(parts[0]);
+            if (world == null) {
                 getLogger().warning(String.format("World %s does not exist!", parts[0]));
+                continue;
+            }
+
+            RegionManager regionManager = regionContainer.get(new BukkitWorld(world));
+            if (regionManager == null) {
+                getLogger().warning(String.format("World %s is not valid for WorldGuard!", parts[0]));
                 continue;
             }
 
