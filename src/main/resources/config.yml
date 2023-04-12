@@ -2,5 +2,9 @@
 #   <world>:<region>
 #   Where <world> is the name of the world and <region> is the name of the region.
 
+# Reset velocity
+reset-velocity: false
+
+# List of regions where elytra are not allowed
 no-elytra-regions:
   - "world:no_ely"

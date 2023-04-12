@@ -25,6 +25,7 @@ public class CommandNoElytra implements CommandExecutor {
 
         if (arg0Lower.equals("reload")) {
             plugin.reloadConfig();
+            plugin.loadConfigValues();
             plugin.loadRegionNames();
             plugin.loadRegions();
             sender.sendMessage(ChatColor.GREEN + "Config reloaded!");

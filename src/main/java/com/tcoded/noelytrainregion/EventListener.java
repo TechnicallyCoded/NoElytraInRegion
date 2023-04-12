@@ -2,11 +2,13 @@ package com.tcoded.noelytrainregion;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 public class EventListener implements Listener {
 
@@ -34,17 +36,21 @@ public class EventListener implements Listener {
             if (!player.isGliding()) return;
 
             player.setGliding(false);
+            if (plugin.shouldResetVelocity()) player.setVelocity(new Vector(0, 0, 0));
             player.sendMessage(ChatColor.RED + "You can't use an elytra in this region!");
         }
     }
 
     @EventHandler
     public void onElytra(EntityToggleGlideEvent event) {
-        if (!(event.getEntity() instanceof Player)) return;
+        Entity entity = event.getEntity();
 
-        if (event.isGliding() && isInBannedRegion(event.getEntity().getLocation())) {
+        if (!(entity instanceof Player)) return;
+
+        if (event.isGliding() && isInBannedRegion(entity.getLocation())) {
             event.setCancelled(true);
-            event.getEntity().sendMessage(ChatColor.RED + "You can't use an elytra in this region!");
+            if (plugin.shouldResetVelocity()) entity.setVelocity(new Vector(0, 0, 0));
+            entity.sendMessage(ChatColor.RED + "You can't use an elytra in this region!");
         }
     }
 

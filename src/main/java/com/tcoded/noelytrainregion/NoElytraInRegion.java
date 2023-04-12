@@ -18,11 +18,13 @@ public final class NoElytraInRegion extends JavaPlugin {
     private List<String> noElytraRegionNames;
     private List<ProtectedRegion> noElytraRegions;
     private RegionContainer regionContainer;
+    private boolean resetVelocity;
 
     @Override
     public void onEnable() {
         // Config
         saveDefaultConfig();
+        loadConfigValues();
         loadRegionNames();
 
         // WorldGuard
@@ -36,6 +38,10 @@ public final class NoElytraInRegion extends JavaPlugin {
 
         // Listeners
         getServer().getPluginManager().registerEvents(new EventListener(this), this);
+    }
+
+    public void loadConfigValues() {
+        resetVelocity = getConfig().getBoolean("reset-velocity");
     }
 
     public void loadRegionNames() {
@@ -77,5 +83,9 @@ public final class NoElytraInRegion extends JavaPlugin {
 
     public List<ProtectedRegion> getNoElytraRegions() {
         return noElytraRegions;
+    }
+
+    public boolean shouldResetVelocity() {
+        return resetVelocity;
     }
 }
