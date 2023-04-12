@@ -1,0 +1,14 @@
+name: NoElytraInRegion
+version: '${version}'
+main: com.tcoded.noelytrainregion.NoElytraInRegion
+api-version: 1.13
+folia-supported: true
+depend:
+  - WorldGuard
+
+commands:
+    noelytra:
+        description: Main plugin command
+        aliases: [noely, noelytraregion]
+        permission: noelytra.command.noelytra
+        default: op
